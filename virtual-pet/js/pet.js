@@ -27,7 +27,7 @@ function refreshUI() {
     //picture thing
     let petImg = document.getElementById("pet-img");
     let petParagraph = document.getElementById("pet-condition");
-    if (happiness <= 1 && tiredness >= 9) {
+    if (happiness <= 2 && tiredness >= 8) {
         petImg.src = "images/dead.jpg"
         petParagraph.innerHTML = "Your pet died"
     } else if (happiness > 0 && tiredness >= 5) {
@@ -43,10 +43,6 @@ function refreshUI() {
 
 }
 
-function gameOver() {
-    if (happiness === 0 && tiredness === 10)
-        alert("GAME OVER, UR BAD")
-}
 
 function downPet() {
     if (happiness > 0) {

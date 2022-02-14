@@ -44,7 +44,7 @@ ctx.stroke();
 //using a for loop, draw a bullseye
 for (let radius = 20; radius <= 20; radius -= 5) {
     ctx.beginPath();
-    ctx.arc(100, 50, 25, 0, 2 * Math.PI);
+    ctx.arc(100, 50, radius, 0, 2 * Math.PI);
     ctx.strokeStyle = "Red";
     ctx.stroke();
 }
