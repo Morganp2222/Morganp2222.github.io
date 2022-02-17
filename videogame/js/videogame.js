@@ -1,80 +1,44 @@
-//get canvas item
-
 let myCanvas = document.getElementById("my-canvas");
 let ctx = myCanvas.getContext("2d");
-let emoji = document.getElementById("emoji");
 
-//get paragraph items
+
 let keydownOutput = document.getElementById("keydown-output");
 let keyupOutput = document.getElementById("keyup-output");
 
-//player position and movement
+
 let playerx = 250;
 let playery = 250;
 let playerspeed = 2;
 let playerxdir = 0;
 let playerydir = 0;
-const PADDLE_WIDTH = 100;
-const PADDLE_HEIGHT = 20;
-
-//image settings
-const IMG_WIDTH = 40;
-const IMG_HEIGHT = 40;
-
-//balls
-let ballx = 100;
-let bally = 100;
-let ballxdir = 1.5;
-let ballydir = 2;
-const BALL_RADIUS = 15;
-
 
 function drawPlayer() {
-    ctx.fillRect(playerx, playery, 100, 25);
+    ctx.fillRect(playerx, playery, 25, 25);
     ctx.fillStyle = "Purple";
 }
 
 function movePlayer() {
     playerx += (playerspeed * playerxdir);
     playery += (playerspeed * playerydir);
-
-    //edge check
-    if (playerx < 0) {
-        playerx = 0;
-    } else if (playerx > 500 - 100) {
-        playerx = 500 - 100;
-    }
-    if (playery > 475) {
-        playery = 475
-    } else if (playery < 0) {
-        playery = 0
-    }
 }
 
-function drawImage() {
-    ctx.drawImage(emoji, ballx, bally, IMG_WIDTH, IMG_HEIGHT);
+if (playerx < 0) {
+    playerx = 0;
+} else if (playerx > 500 - 100) {
+    playerx = 500 - 100;
 }
-
-function drawBall() {
-    // draw a filled circle at ballx and bally
-    ctx.beginPath();
-    ctx.arc(ballx, bally, BALL_RADIUS, 0, 2 * Math.PI);
-    ctx.fill();
+if (playery > 475) {
+    playery = 475
+} else if (playery < 0) {
+    playery = 0
 }
-
-function moveBall() {
-    bally += ballydir;
-    ballx += ballxdir;
-}
-
 
 function refreshUI() {
     ctx.clearRect(0, 0, 500, 500);
     movePlayer();
     drawPlayer();
+    drawMaze();
 }
-
-//when key is pressed
 
 function keyPressed(event) {
     //get the actual key pressed
@@ -91,8 +55,6 @@ function keyPressed(event) {
         playerydir = 1;
     }
 }
-
-//when key is released 
 
 function keyReleased(event) {
     let key = event.keyCode
@@ -155,6 +117,27 @@ function bounceHor() {
     }
 }
 
+function drawMaze() {
+    ctx.fillStyle = "yellow";
+    ctx.fillRect(225, 225, 20, 60);
+    ctx.fillRect(145, 225, 200, 20);
+    ctx.fillRect(225, 165, 20, 60);
+    ctx.fillRect(225, 165, 60, 20);
+    ctx.fillRect(100, 285, 200, 20);
+    ctx.fillRect(285, 285, 20, 60);
+    ctx.fillRect(225, 345, 80, 20);
+    ctx.fillRect(325, 165, 20, 80);
+    ctx.fillRect(385, 125, 20, 300);
+    ctx.fillRect(335, 285, 20, 100);
+    ctx.fillRect(85, 420, 360, 20);
+    ctx.fillRect(355, 285, 40, 20);
+    ctx.fillRect(145, 350, 20, 70);
+    ctx.fillRect(85, 125, 20, 300);
+    ctx.fillRect(85, 50, 360, 20);
+    ctx.fillRect(445, 50, 20, 390);
+    ctx.fillRect(165, 105, 240, 20);
+    ctx.fillRect(165, 125, 20, 60);
+}
 
 
 
