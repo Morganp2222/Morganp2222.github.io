@@ -17,23 +17,12 @@ let playerydir = 0;
 const PADDLE_WIDTH = 100;
 const PADDLE_HEIGHT = 20;
 
-//image settings
-const IMG_WIDTH = 40;
-const IMG_HEIGHT = 40;
-
-//balls
-let ballx = 100;
-let bally = 100;
-let ballxdir = 1.5;
-let ballydir = 2;
-const BALL_RADIUS = 15;
-
-
+/*
 function drawPlayer() {
     ctx.fillRect(playerx, playery, 100, 25);
     ctx.fillStyle = "Purple";
 }
-
+*/
 function movePlayer() {
     playerx += (playerspeed * playerxdir);
     playery += (playerspeed * playerydir);
@@ -58,13 +47,23 @@ function drawImage() {
 function drawBall() {
     // draw a filled circle at ballx and bally
     ctx.beginPath();
-    ctx.arc(ballx, bally, BALL_RADIUS, 0, 2 * Math.PI);
+    ctx.arc(playeryx, playery, BALL_RADIUS, 0, 2 * Math.PI);
     ctx.fill();
 }
 
 function moveBall() {
-    bally += ballydir;
-    ballx += ballxdir;
+    playery += playerdir;
+    playerx += playerxdir;
+}
+
+function ballcollision() {
+    //vert walls
+    if ((bally > 500 - BALL_RADIUS) || (bally < 0 + BALL_RADIUS)) {
+        ballydir = ballydir * -1;
+    }
+    if ((ballx > 500 - BALL_RADIUS) || (ballx < 0 + BALL_RADIUS)) {
+        ballxdir = ballxdir * -1;
+    }
 }
 
 
@@ -72,6 +71,11 @@ function refreshUI() {
     ctx.clearRect(0, 0, 500, 500);
     movePlayer();
     drawPlayer();
+    //animate ball
+    ballcollision();
+    moveBall();
+    //drawBall();
+    drawImage();
 }
 
 //when key is pressed
