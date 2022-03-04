@@ -17,12 +17,23 @@ let playerydir = 0;
 const PADDLE_WIDTH = 100;
 const PADDLE_HEIGHT = 20;
 
-/*
+//image settings
+const IMG_WIDTH = 40;
+const IMG_HEIGHT = 40;
+
+//balls
+let ballx = 100;
+let bally = 100;
+let ballxdir = 1.5;
+let ballydir = 2;
+const BALL_RADIUS = 15;
+
+
 function drawPlayer() {
     ctx.fillRect(playerx, playery, 100, 25);
     ctx.fillStyle = "Purple";
 }
-*/
+
 function movePlayer() {
     playerx += (playerspeed * playerxdir);
     playery += (playerspeed * playerydir);
@@ -47,13 +58,13 @@ function drawImage() {
 function drawBall() {
     // draw a filled circle at ballx and bally
     ctx.beginPath();
-    ctx.arc(playeryx, playery, BALL_RADIUS, 0, 2 * Math.PI);
+    ctx.arc(ballx, bally, BALL_RADIUS, 0, 2 * Math.PI);
     ctx.fill();
 }
 
 function moveBall() {
-    playery += playerdir;
-    playerx += playerxdir;
+    bally += ballydir;
+    ballx += ballxdir;
 }
 
 function ballcollision() {
@@ -63,6 +74,12 @@ function ballcollision() {
     }
     if ((ballx > 500 - BALL_RADIUS) || (ballx < 0 + BALL_RADIUS)) {
         ballxdir = ballxdir * -1;
+    }
+
+    //check if paddle is hit
+    if (ballx + BALL_RADIUS >= playerx && ballx - BALL_RADIUS <= playerx + PADDLE_WIDTH && bally + BALL_RADIUS >= playery && bally - BALL_RADIUS <= playery + PADDLE_HEIGHT) {
+        ballydir = ballydir * -1.01;
+
     }
 }
 
