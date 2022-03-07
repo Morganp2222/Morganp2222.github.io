@@ -13,6 +13,30 @@ let playerxdir = 0;
 let playerydir = 0;
 let playerheight = 15;
 let playerwidth = 15;
+xPositions = [225, 145, 225, 225, 100, 285, 225, 325, 385, 335, 85, 355, 145, 85, 85, 445, 165, 165]
+yPositions = [225, 225, 165, 165, 285, 285, 345, 165, 125, 285, 420, 285, 350, 125, 50, 50, 105, 125]
+widths = [20, 200, 20, 60, 200, 20, 80, 20, 20, 20, 360, 40, 20, 20, 360, 20, 240, 20]
+heights = [60, 20, 60, 20, 20, 60, 20, 80, 300, 100, 20, 20, 70, 300, 20, 390, 20, 60]
+
+
+function DrawAllWalls() {
+    for (let i = 0; i < xPositions.length; i++) {
+        ctx.fillRect(xPositions[i], yPositions[i], widths[i], heights[i]);
+    }
+}
+
+function CollisionWalls() {
+    for (let i = 0; i < xPositions.length; i++) {
+        if (playerx + playerwidth >= xPositions[i] && playerx <= xPositions[i] + widths[i]) {
+            if (playery + playerheight >= yPositions[i] && playery <= yPositions[i] + heights[i]) {
+                console.log("collision with block:" + i);
+                playerx = 250;
+                playery = 250;
+            }
+        }
+    }
+}
+
 
 function drawPlayer() {
     ctx.fillRect(playerx, playery, playerheight, playerwidth)
@@ -24,26 +48,37 @@ function movePlayer() {
 }
 
 function collision() {
-    if (playerx < 0) {
-        playerx = 15;
+    if (playerx < 75) {
+        playerx = 250;
+        playery = 250;
+        alert("You've beaten the maze!!!")
     } else if (playerx > 500 - playerheight) {
         playerx = 500 - playerheight;
+        playery = 250;
+        playerx = 250;
+        alert("You've beaten the maze!!!")
     }
     if (playery > 500 - playerwidth) {
         playery = 500 - playerwidth
+        playery = 250;
+        playerx = 250;
+        alert("You've beaten the maze!!!")
     } else if (playery < 0) {
-        playery = 15
+        playery = 250;
+        playerx = 250;
+        alert("You've beaten the maze!!!")
     }
-}
 
+}
 
 
 function refreshUI() {
     ctx.clearRect(0, 0, 500, 500);
     movePlayer();
     drawPlayer();
-    drawMaze();
     collision();
+    DrawAllWalls();
+    CollisionWalls();
 }
 
 function keyPressed(event) {
@@ -79,30 +114,4 @@ function keyReleased(event) {
 
 }
 
-function drawMaze() {
-    ctx.fillStyle = "red";
-    ctx.fillRect(225, 225, 20, 60);
-    ctx.fillRect(145, 225, 200, 20);
-    ctx.fillRect(225, 165, 20, 60);
-    ctx.fillRect(225, 165, 60, 20);
-    ctx.fillRect(100, 285, 200, 20);
-    ctx.fillRect(285, 285, 20, 60);
-    ctx.fillRect(225, 345, 80, 20);
-    ctx.fillRect(325, 165, 20, 80);
-    ctx.fillRect(385, 125, 20, 300);
-    ctx.fillRect(335, 285, 20, 100);
-    ctx.fillRect(85, 420, 360, 20);
-    ctx.fillRect(355, 285, 40, 20);
-    ctx.fillRect(145, 350, 20, 70);
-    ctx.fillRect(85, 125, 20, 300);
-    ctx.fillRect(85, 50, 360, 20);
-    ctx.fillRect(445, 50, 20, 390);
-    ctx.fillRect(165, 105, 240, 20);
-    ctx.fillRect(165, 125, 20, 60);
-}
-
-
-
-
-//setInterval(b 10);
 setInterval(refreshUI, 30);
